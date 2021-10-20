@@ -86,7 +86,7 @@ input {
 }
 
 .photo-container li:hover img {
-  transform: scale(1.65);
+  transform: scale(2);
 }
 
 .photo-container .not-found {

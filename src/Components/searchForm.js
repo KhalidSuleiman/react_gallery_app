@@ -1,5 +1,5 @@
 import  React, { Component } from "react";
-import Navigation from "./Navigations";
+// import Navigation from "./Navigations";
 import apiKey from "../config";
 import axios from 'axios';
 

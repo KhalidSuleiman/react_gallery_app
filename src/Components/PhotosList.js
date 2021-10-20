@@ -1,23 +1,35 @@
 import React from 'react';
 import Photo from './Photo';
+import SearchForm from './searchForm';
+import Navigation from './Navigations';
 
  function PhotosList(props) { 
-    console.log("This PhostList function  "+ props.data)
-    let allPics = props.data.map(photo => `<img src= {https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg} key=${photo.id} alt=${photo.title} /> `);
-        console.log(allPics)
-       return (
-        <div class="photo-container">
-            <h2>Results</h2>
-            <h3>This is "PhotoList" Component</h3>
-            
-            <ul>
-                
-                <Photo DataList={ allPics } />
-            </ul>
-                
-        </div>
+   
 
-       );
+    let photoRawData = props.data;
+    let searchWord = props.sWord;
+    let allPics = photoRawData.map(photo => 
+
+        <Photo url= {`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`} title={photo.title} uId={photo.id}  /> 
+        
+        );
+    
+        console.log(photoRawData);
+        console.log(allPics);
+        
+       return (
+            <div class="photo-container">
+                <SearchForm />
+                <Navigation />
+                <h2>Results For  {searchWord}</h2>
+                <h3></h3>
+                <ul>
+                    { allPics } 
+                 
+                </ul>
+
+            </div>
+        );
    
 }
 export default PhotosList;
