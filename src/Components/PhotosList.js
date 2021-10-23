@@ -8,6 +8,7 @@ import Navigation from './Navigations';
 
     let photoRawData = props.data;
     let searchWord = props.sWord;
+    console.log(searchWord);
     let allPics = photoRawData.map(photo => 
 
         <Photo url= {`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`} title={photo.title} uId={photo.id}  /> 
@@ -21,8 +22,8 @@ import Navigation from './Navigations';
             <div class="photo-container">
                 <SearchForm />
                 <Navigation />
-                <h2>Results For  {searchWord}</h2>
-                <h3></h3>
+                <h2>Results For  </h2>
+                <h3>{searchWord}</h3>
                 <ul>
                     { allPics } 
                  
