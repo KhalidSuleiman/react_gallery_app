@@ -4,26 +4,21 @@ import SearchForm from './searchForm';
 import Navigation from './Navigations';
 
  function PhotosList(props) { 
-   
+    console.log(props.data)
+    console.log(" PhotoList-->   "+props.sWord)
+    let allPics =props.data.map(item => 
 
-    let photoRawData = props.data;
-    let searchWord = props.sWord;
-    console.log(searchWord);
-    let allPics = photoRawData.map(photo => 
-
-        <Photo url= {`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`} title={photo.title} uId={photo.id}  /> 
-        
+        <Photo url= {`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_w.jpg`} title={item.title} uId={item.id}  /> 
+         
         );
-    
-        console.log(photoRawData);
-        console.log(allPics);
-        
+        console.log(allPics)
        return (
             <div class="photo-container">
+                {/* <SearchForm /> */}
                 <SearchForm />
                 <Navigation />
                 <h2>Results For  </h2>
-                <h3>{searchWord}</h3>
+                <h3>{props.sWord}</h3>
                 <ul>
                     { allPics } 
                  
