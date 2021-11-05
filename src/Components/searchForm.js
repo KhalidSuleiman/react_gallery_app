@@ -1,5 +1,5 @@
 import  React, { Component } from "react";
-import PreDefinedSearchPhrase from "./PredefinedSearchPhrase";
+import PreDefinedSearchPhrase from "./SearchForMountain";
 
 export default class SearchForm extends Component  {
    state = {

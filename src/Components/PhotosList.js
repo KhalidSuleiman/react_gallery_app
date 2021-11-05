@@ -4,17 +4,18 @@ import SearchForm from './searchForm';
 import Navigation from './Navigations';
 
  function PhotosList(props) { 
-    console.log(props.data)
-    console.log(" PhotoList-->   "+props.sWord)
+    
+   
     let allPics =props.data.map(item => 
 
         <Photo url= {`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_w.jpg`} title={item.title} uId={item.id}  /> 
          
         );
+        console.log("_+_+_+_+-=-=-=-=-=-=-===0=0=0=")
         console.log(allPics)
-       return (
-            <div class="photo-container">
-                {/* <SearchForm /> */}
+       
+        return (
+            <div className ="photo-container">
                 <SearchForm />
                 <Navigation />
                 <h2>Results For  </h2>

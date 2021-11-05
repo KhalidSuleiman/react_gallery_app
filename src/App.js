@@ -12,22 +12,22 @@ import apiKey from './config';
 
 
 // import components 
-import Navigation from './Components/Navigations';
-import SearchForm from './Components/searchForm'
+
 import PhotosList from './Components/PhotosList';
 import NotFound from './Components/NotFound';
-import PreDefinedSearchPhrase from './Components/PredefinedSearchPhrase';
+import SearchForMountain from './Components/SearchForMountain';
+import SearchForDesert from './Components/SearchForDesert';
+import SearchForOcean from './Components/SearchForOcean';
 import ErrorBoundary from './Components/ErrorBoundary';
+import SearchBar from './Components/SearchBar';
 import axios from 'axios';// 
 
 
 
 export default class  App extends React.Component  {
-  constructor (){
-    super();
-    
-    console.log("constructor");
-    const searchTerms =[
+  
+
+  searchTerms =[
       "Camels", 
       "Horses", 
       "Islam",
@@ -35,77 +35,88 @@ export default class  App extends React.Component  {
       "Gaza",
       "Dubai",
       "Date Palm",
-      "Highway 66"
-    ]; 
+      "Highway 66",
+      "Red Rocks"
+  ]; 
 
-    
-    
-    this.state = {
-      searchPhrase :searchTerms[Math.floor(Math.random() * searchTerms.length)],
-      results : [],
-      loading : false
-      };
-    // setting search phrase for predefined search bottons 
-    
-    this.searchFor()
-    // this.setState({searchPhrase : "Oman"});  // {searchPhrase : ]});
-    //this.searchFor();
-  }
-  
-  
-  
-  searchFor() {
-    console.log("arrow head function app")
+  state = {
+    searchPhrase :this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)],
+    results : [],
+    loading : false
+  };
+
+searchFor = async (props) => {
+    console.log("insid searchFor"+this.state.searchPhrase)
     this.setState({loading : true})
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchPhrase}&per_page=50&format=json&nojsoncallback=1`)
+    await axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchPhrase}&per_page=50&format=json&nojsoncallback=1`)
     .then(response => {
       this.setState({ 
-         results: response.data.photos.photo,
-         
+         results: response.data.photos.photo, 
          loading: false
       });
       
     }
-    )
-    .catch(error => {
+    ).catch(error => {
       console.log('Error fetching and parsing data', error);
     });
   }
-  
 
-  render() {
+  initialSetting = () => {
     
-    console.log("-------------------------------------------")
-    console.log("App render "+this.state.searchPhrase)
-    console.log(this.state.results)
-    console.log("-------------------------------------------")
+    
+    console.log("+_+_+_+_+_+_+_+start_+_+_+_+_+_+_+_+_+_");
+    console.log(this.state.searchPhrase);
+    // this.setState({ searchPhrase : this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]});
+    console.log(this.state.searchPhrase);
+      
+    const value = this.state.searchPhrase
+    this.searchFor(value);
+      
+    console.log("+_+_+_+_+_+_+_+end_+_+_+_+_+_+_+_+_+_");
+  }
+  onSearchChange = (e) => {
+      this.setState({ searchPhrase : e.target.value }); 
+  }
+  handleSubmit =(e) => {
+    console.log("handleSubmit  --> "+e.target.value);
+    e.preventDefault();
+    this.setState({ searchPhrase : e.target.value });
+    const value = this.state.searchPhrase
+    this.searchFor(value);
+    e.currentTarget.reset();
+  }
+  
+  componentDidMount(){
+    this.initialSetting();
+  }
 
+  render () {
     
     return (
       
       <div class="photo-container">
         
         <BrowserRouter>
+          <ErrorBoundary>
           <div className="container">
-            <Switch>
-              
+            
+            <Switch >  
               <Route  exact path= "/" render= { ()=> <PhotosList data={this.state.results}  sWord={this.state.searchPhrase} />} />
-              <Route path="/Mountain" render = {() => <PreDefinedSearchPhrase  sWord= {"Mountain"} />} />
-              <Route path="/Desert" render = {() =>  <PreDefinedSearchPhrase  sWord= {"Desert"} />} />
-              <Route path="/Ocean" render = {() => <PreDefinedSearchPhrase  sWord= {"Ocean"} />} />
-              <Route path="/:query" render={ () =>  <PreDefinedSearchPhrase sWord={"Red Sea"} />} />
+              <Route path="/Mountain" render = {() => <SearchForMountain  />} />
+              <Route path="/Desert" render = {() =>   <SearchForDesert   />} />
+              <Route path="/Ocean" render = {() => <SearchForOcean   />} />
+              <Route path="/:query" render={ () =>  <SearchBar change={this.onSearchChange}  submit= {this.handleSubmit} />} />
               <Route component={NotFound} />
-            </Switch>
+          </Switch> 
           </div>
+          </ErrorBoundary>
         </BrowserRouter>
       </div>
-        );
+    )
   }
-componentDidUpdate(){
+}
 
-}
-  
-}
+
 
 
 

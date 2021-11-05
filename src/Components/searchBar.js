@@ -1,11 +1,11 @@
-import react from 'react';
+import React from 'react';
 
-const searchBar = (props) => {
-
+const SearchBar = (props) => {
+    console.log(props)
     return (
-        <form class="search-form" onSubmit={props.handleSubmit}>
+        <form class="search-form" onSubmit={props.submit}>
         <input type="search"  
-            onChange={props.onSearchChange}  
+            onChange={props.change}  
             placeholder="Search" 
             required/>
         <button type="submit" class="search-button">
@@ -18,4 +18,4 @@ const searchBar = (props) => {
     )
 }
 
-export default searchBar;
+export default SearchBar;
