@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import './index.css';
 import './Components/searchForm';
@@ -45,7 +43,7 @@ export default class  App extends React.Component  {
     loading : false
   };
 
-searchFor = async (props) => {
+searchForm = async (props) => {
     console.log("insid searchFor"+this.state.searchPhrase)
     this.setState({loading : true})
     await axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchPhrase}&per_page=50&format=json&nojsoncallback=1`)
@@ -63,14 +61,14 @@ searchFor = async (props) => {
 
   initialSetting = () => {
     
-    
+    this.setState({searchPhrase : this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]})
     console.log("+_+_+_+_+_+_+_+start_+_+_+_+_+_+_+_+_+_");
     console.log(this.state.searchPhrase);
     // this.setState({ searchPhrase : this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]});
     console.log(this.state.searchPhrase);
       
     const value = this.state.searchPhrase
-    this.searchFor(value);
+    this.searchForm(value);
       
     console.log("+_+_+_+_+_+_+_+end_+_+_+_+_+_+_+_+_+_");
   }
@@ -78,11 +76,8 @@ searchFor = async (props) => {
       this.setState({ searchPhrase : e.target.value }); 
   }
   handleSubmit =(e) => {
-    console.log("handleSubmit  --> "+e.target.value);
     e.preventDefault();
-    this.setState({ searchPhrase : e.target.value });
-    const value = this.state.searchPhrase
-    this.searchFor(value);
+    this.searchForm(this.state.searchPhrase);
     e.currentTarget.reset();
   }
   

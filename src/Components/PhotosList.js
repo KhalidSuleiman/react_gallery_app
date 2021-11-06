@@ -12,7 +12,6 @@ import Navigation from './Navigations';
          
         );
         console.log("_+_+_+_+-=-=-=-=-=-=-===0=0=0=")
-        console.log(allPics)
        
         return (
             <div className ="photo-container">

@@ -4,7 +4,8 @@ const SearchBar = (props) => {
     console.log(props)
     return (
         <form class="search-form" onSubmit={props.submit}>
-        <input type="search"  
+        <input type="search" 
+            name="search" 
             onChange={props.change}  
             placeholder="Search" 
             required/>
