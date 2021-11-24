@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
@@ -124,4 +125,17 @@ input {
     margin: 10px;
     width: 100px;
   }
+=======
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+>>>>>>> 876d931 (Initialize project using Create React App)
 }
