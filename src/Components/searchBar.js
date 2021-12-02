@@ -1,8 +1,10 @@
 import React from 'react';
+import Navigation from './Navigations';
 
 const SearchBar = (props) => {
-    console.log(props)
+    
     return (
+
         <form class="search-form" onSubmit={props.submit}>
         <input type="search" 
             name="search" 
@@ -15,6 +17,7 @@ const SearchBar = (props) => {
                 <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
         </button>
+        <Navigation />
     </form>  
     )
 }
