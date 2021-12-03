@@ -4,7 +4,7 @@ function Photo(props)
 {
     return (
         <li>
-            <img src={props.url} alt={props.title} key={props.uId}/>
+            <img src={props.url} alt={props.title} key={props.pId}/>
         </li>)
 }
 

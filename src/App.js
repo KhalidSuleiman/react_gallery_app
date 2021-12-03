@@ -43,6 +43,9 @@ export default class  App extends React.Component  {
     
   }
    searchPics =async(term, type) => {
+     this.setState( {
+        loading : true
+      })
     console.log(" searchPics "+term+" type "+type)
     await axios.get
         (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=24&format=json&nojsoncallback=1`)
@@ -63,6 +66,10 @@ export default class  App extends React.Component  {
           
         })
         .catch(error =>console.log("some thing wrong "+error))
+        this.setState( {
+          loading : false
+        })
+
     console.log("---- "+term+" ----- "+type+" ------")
     // console.log(this.state.results)
     
@@ -76,7 +83,7 @@ export default class  App extends React.Component  {
     fixedSearch.map(term  => this.searchPics(term, "fixed"));
 
   }
-
+  
   componentDidUpdate(prevState){
     
   }
@@ -96,8 +103,16 @@ export default class  App extends React.Component  {
 
                   <SearchForm searchPics ={this.searchPics} />
                   <Navigation />
-
-                  <Switch >
+                  { (this.state.loading)
+                    ? 
+                  <div className="text-center">
+                    <h1 className="text-white">Loading...</h1>
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+  
+                  :<Switch >
                     <Route  exact path= "/" render= { ()=> <Redirect to={"/Mountain"} />} />
                     <Route exact path="/Mountain" render = {() => <PhotoContainer
                         data ={this.state.mountain}
@@ -120,10 +135,14 @@ export default class  App extends React.Component  {
                             
                         /> }
                     />
-                    <Route component={NotFound} />
-                  </Switch>
+                    
+                    
+                  <Route component={NotFound} />
 
+                  </Switch>
+                  }
                 </div>
+                    
 
 
           </BrowserRouter>
@@ -131,6 +150,7 @@ export default class  App extends React.Component  {
     )
 
   }
+  
 
 }
 
