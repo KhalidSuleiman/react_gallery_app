@@ -42,10 +42,10 @@ export default class  App extends React.Component  {
             })
     
   }
-  async searchPics(term, type) {
+   searchPics =async(term, type) => {
     console.log(" searchPics "+term+" type "+type)
     await axios.get
-        (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=50&format=json&nojsoncallback=1`)
+        (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=24&format=json&nojsoncallback=1`)
         .then(response => {
           if(type === "fixed"){
             
@@ -55,7 +55,7 @@ export default class  App extends React.Component  {
             console.log("else Statement")
             console.log(response.data.photos.photo)
             this.setState({ 
-              results : response.data.photos.photo,
+              results : response.data.photos.photo
               
             })
           }
@@ -64,6 +64,7 @@ export default class  App extends React.Component  {
         })
         .catch(error =>console.log("some thing wrong "+error))
     console.log("---- "+term+" ----- "+type+" ------")
+    // console.log(this.state.results)
     
     
 
@@ -73,6 +74,7 @@ export default class  App extends React.Component  {
       'mountain','Duqm','containersShip'
     ];
     fixedSearch.map(term  => this.searchPics(term, "fixed"));
+
   }
 
   componentDidUpdate(prevState){
@@ -114,6 +116,7 @@ export default class  App extends React.Component  {
                         <PhotoContainer
                             data={this.state.results}
                             title={match.params.query}
+                            type="non-fixed"
                             
                         /> }
                     />

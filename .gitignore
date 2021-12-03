@@ -26,5 +26,5 @@ yarn-error.log*
 
 #apiKey file 
 config.js
-=======
->>>>>>> 876d931 (Initialize project using Create React App)
+
+
