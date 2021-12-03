@@ -1,145 +1,134 @@
-<<<<<<< HEAD
+
 import React from 'react';
 import './index.css';
 import './Components/searchForm';
 import {
-    BrowserRouter,
-    Route,
-    Switch
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect
 } from 'react-router-dom';
-import apiKey from './config';
+import axios from 'axios';
 
 
-// import components 
-
-import PhotosList from './Components/PhotosList';
+// import components
+import apiKey from "./config";
 import NotFound from './Components/NotFound';
-import SearchForMountain from './Components/SearchForMountain';
-import SearchForDesert from './Components/SearchForDesert';
-import SearchForOcean from './Components/SearchForOcean';
-import ErrorBoundary from './Components/ErrorBoundary';
-import SearchBar from './Components/SearchBar';
-import axios from 'axios';// 
+import SearchForm from  './Components/searchForm';
+import Navigation from './Components/Navigations';
+import PhotoContainer from "./Components/PhotoContainer";
+
+
 
 
 
 export default class  App extends React.Component  {
-  
 
-  searchTerms =[
-      "Camels", 
-      "Horses", 
-      "Islam",
-      "Arabia",
-      "Gaza",
-      "Dubai",
-      "Date Palm",
-      "Highway 66",
-      "Red Rocks"
-  ]; 
+
 
   state = {
-    searchPhrase :this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)],
+    searchPhrase :'', // this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]
+    query :'',
     results : [],
+    mountain : [],
+    Duqm : [],
+    containersShip: [],
     loading : false
   };
 
-searchForm = async (props) => {
-    console.log("insid searchFor"+this.state.searchPhrase)
-    this.setState({loading : true})
-    await axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchPhrase}&per_page=50&format=json&nojsoncallback=1`)
-    .then(response => {
-      this.setState({ 
-         results: response.data.photos.photo, 
-         loading: false
-      });
-      
-    }
-    ).catch(error => {
-      console.log('Error fetching and parsing data', error);
-    });
+  assignmentFunction = (picsData)=>{
+    this.setState( {
+              results: picsData.data.photos.photo
+            })
+    
+  }
+  async searchPics(term, type) {
+    console.log(" searchPics "+term+" type "+type)
+    await axios.get
+        (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=50&format=json&nojsoncallback=1`)
+        .then(response => {
+          if(type === "fixed"){
+            
+            this.setState({[term] : response.data.photos.photo})
+            console.log("fixed inside if statement "+type)
+          }else {
+            console.log("else Statement")
+            console.log(response.data.photos.photo)
+            this.setState({ 
+              results : response.data.photos.photo,
+              
+            })
+          }
+            
+          
+        })
+        .catch(error =>console.log("some thing wrong "+error))
+    console.log("---- "+term+" ----- "+type+" ------")
+    
+    
+
+  }
+  componentDidMount(){
+    const fixedSearch = [
+      'mountain','Duqm','containersShip'
+    ];
+    fixedSearch.map(term  => this.searchPics(term, "fixed"));
   }
 
-  initialSetting = () => {
+  componentDidUpdate(prevState){
     
-    this.setState({searchPhrase : this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]})
-    console.log("+_+_+_+_+_+_+_+start_+_+_+_+_+_+_+_+_+_");
-    console.log(this.state.searchPhrase);
-    // this.setState({ searchPhrase : this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]});
-    console.log(this.state.searchPhrase);
-      
-    const value = this.state.searchPhrase
-    this.searchForm(value);
-      
-    console.log("+_+_+_+_+_+_+_+end_+_+_+_+_+_+_+_+_+_");
-  }
-  onSearchChange = (e) => {
-      this.setState({ searchPhrase : e.target.value }); 
-  }
-  handleSubmit =(e) => {
-    e.preventDefault();
-    this.searchForm(this.state.searchPhrase);
-    e.currentTarget.reset();
-  }
-  
-  componentDidMount(){
-    this.initialSetting();
   }
 
   render () {
     
     return (
-      
-      <div class="photo-container">
-        
-        <BrowserRouter>
-          <ErrorBoundary>
-          <div className="container">
-            
-            <Switch >  
-              <Route  exact path= "/" render= { ()=> <PhotosList data={this.state.results}  sWord={this.state.searchPhrase} />} />
-              <Route path="/Mountain" render = {() => <SearchForMountain  />} />
-              <Route path="/Desert" render = {() =>   <SearchForDesert   />} />
-              <Route path="/Ocean" render = {() => <SearchForOcean   />} />
-              <Route path="/:query" render={ () =>  <SearchBar change={this.onSearchChange}  submit= {this.handleSubmit} />} />
-              <Route component={NotFound} />
-          </Switch> 
-          </div>
-          </ErrorBoundary>
-        </BrowserRouter>
-      </div>
+
+        <div className ="container">
+
+          <BrowserRouter>
+
+
+
+
+                <div className="photo-container">
+
+                  <SearchForm searchPics ={this.searchPics} />
+                  <Navigation />
+
+                  <Switch >
+                    <Route  exact path= "/" render= { ()=> <Redirect to={"/Mountain"} />} />
+                    <Route exact path="/Mountain" render = {() => <PhotoContainer
+                        data ={this.state.mountain}
+                        title = "Mountain"
+                        type = "fixed" />} />
+                    <Route exact path="/Duqm" render = {() => <PhotoContainer
+                        data ={this.state.Duqm}
+                        title = "Duqm"
+                        type = "fixed" />} />
+                    <Route exact path="/containerShip" render = {() => <PhotoContainer
+                        data ={this.state.containersShip}
+                        title = "Containers Ship"
+                        type = "fixed" />} />
+                        
+                    <Route exact path="/search/:query" render={({ match }) =>
+                        <PhotoContainer
+                            data={this.state.results}
+                            title={match.params.query}
+                            
+                        /> }
+                    />
+                    <Route component={NotFound} />
+                  </Switch>
+
+                </div>
+
+
+          </BrowserRouter>
+        </div>
     )
+
   }
+
 }
 
 
-
-
-
-=======
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
->>>>>>> 876d931 (Initialize project using Create React App)
