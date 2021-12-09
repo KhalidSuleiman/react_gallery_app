@@ -96,9 +96,6 @@ export default class  App extends React.Component  {
 
           <BrowserRouter>
 
-
-
-
                 <div className="photo-container">
 
                   <SearchForm searchPics ={this.searchPics} />
@@ -133,7 +130,8 @@ export default class  App extends React.Component  {
                             title={match.params.query}
                             type="non-fixed"
                             
-                        /> }
+                        /> 
+                      }
                     />
                     
                     

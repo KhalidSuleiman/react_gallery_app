@@ -20,11 +20,12 @@ class SearchForm extends Component  {
         e.preventDefault()
         console.log(" input handler "+this.state.searchValue)
         this.props.searchPics(this.state.searchValue,"not-fixed")
-        e.currentTarget.reset()
         this.props.history.push(`/search/${this.state.searchValue}`)
+        e.currentTarget.reset()
+        
 
     }
-
+    
     
     render(){
         return (

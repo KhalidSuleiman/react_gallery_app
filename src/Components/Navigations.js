@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import SearchBar from './SearchBar';
+
 //import  Photo from './Photo';
 
 export default class Navigation extends Component  {
