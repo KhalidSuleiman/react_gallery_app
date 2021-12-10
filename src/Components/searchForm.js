@@ -26,8 +26,10 @@ class SearchForm extends Component  {
 
     }
     componentDidUpdate(prevProps) { // invoked after updating occurs
-        if(prevProps.location.pathname !== this.props.location.pathname ) { // a condition prevents infinite loops
-            if(this.props.location.pathname.includes("/search")){ // use path as state gets updated each handleChange
+        if(prevProps.location.pathname !== this.props.location.pathname ) 
+        { 
+            if(this.props.location.pathname.includes("/search"))
+            { 
                 const query = this.props.location.pathname.replace("/search/", "");
                 this.props.searchPics(query,"not-fixed");
             }
