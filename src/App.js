@@ -1,12 +1,13 @@
 
-import React from 'react';
+import React  from 'react';
 import './index.css';
 import './Components/searchForm';
 import {
   BrowserRouter,
   Route,
   Switch,
-  Redirect
+  Redirect,
+ 
 } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,6 +18,7 @@ import NotFound from './Components/NotFound';
 import SearchForm from  './Components/searchForm';
 import Navigation from './Components/Navigations';
 import PhotoContainer from "./Components/PhotoContainer";
+import { match } from 'assert';
 
 
 
@@ -36,16 +38,14 @@ export default class  App extends React.Component  {
     loading : false
   };
 
-  assignmentFunction = (picsData)=>{
-    this.setState( {
-              results: picsData.data.photos.photo
-            })
-    
-  }
+  
    searchPics =async(term, type) => {
      this.setState( {
         loading : true
       })
+
+
+
     console.log(" searchPics "+term+" type "+type)
     await axios.get
         (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=24&format=json&nojsoncallback=1`)
@@ -81,13 +81,12 @@ export default class  App extends React.Component  {
       'mountain','Duqm','containersShip'
     ];
     fixedSearch.map(term  => this.searchPics(term, "fixed"));
+   
+    
 
   }
   
-  componentDidUpdate(prevState){
-    
-  }
-
+  
   render () {
     
     return (
@@ -124,7 +123,7 @@ export default class  App extends React.Component  {
                         title = "Containers Ship"
                         type = "fixed" />} />
                         
-                    <Route exact path="/search/:query" render={({ match }) =>
+                    <Route exact path="/search/:query" render={({ match }) => 
                         <PhotoContainer
                             data={this.state.results}
                             title={match.params.query}
