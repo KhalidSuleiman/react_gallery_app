@@ -26,6 +26,7 @@ yarn-error.log*
 
 
 #apiKey file 
-react_gallery_app/src/config.js
+/src/config.js
+
 
 
