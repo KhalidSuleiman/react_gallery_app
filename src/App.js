@@ -1,16 +1,14 @@
 
 import React  from 'react';
 import './index.css';
-import './Components/searchForm';
+import axios from 'axios';
 import {
   BrowserRouter,
   Route,
   Switch,
-  Redirect,
- 
+  Redirect
 } from 'react-router-dom';
-import axios from 'axios';
-
+ 
 
 // import components
 import apiKey from "./config";
@@ -18,16 +16,10 @@ import NotFound from './Components/NotFound';
 import SearchForm from  './Components/searchForm';
 import Navigation from './Components/Navigations';
 import PhotoContainer from "./Components/PhotoContainer";
-import { match } from 'assert';
-
-
-
 
 
 export default class  App extends React.Component  {
-
-
-
+  //state variables 
   state = {
     searchPhrase :'', // this.searchTerms[Math.floor(Math.random() * this.searchTerms.length)]
     query :'',
@@ -38,26 +30,27 @@ export default class  App extends React.Component  {
     loading : false
   };
 
-  
+  /*
+  searchPics has two parameters term: has the string value of search word to be passed by API 
+  and type : two values "fixed" for predefined terms and "non-fixed" for search word entered by the user 
+  searchPics update the state value above 
+  */
    searchPics =async(term, type) => {
-     this.setState( {
-        loading : true
+    this.setState( {   //indicating starting of API search and waiting for response 
+      loading : true
       })
 
-
-
-    console.log(" searchPics "+term+" type "+type)
+    
     await axios.get
         (`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${term}&per_page=24&format=json&nojsoncallback=1`)
         .then(response => {
           if(type === "fixed"){
             
             this.setState({[term] : response.data.photos.photo})
-            console.log("fixed inside if statement "+type)
+            
           }else {
-            console.log("else Statement")
-            console.log(response.data.photos.photo)
-            this.setState({ 
+            
+            this.setState({  
               results : response.data.photos.photo
               
             })
@@ -66,23 +59,21 @@ export default class  App extends React.Component  {
           
         })
         .catch(error =>console.log("some thing wrong "+error))
-        this.setState( {
+        this.setState( {  //API and search ended 
           loading : false
         })
 
-    console.log("---- "+term+" ----- "+type+" ------")
-    // console.log(this.state.results)
+    
     
     
 
   }
-  componentDidMount(){
+  componentDidMount(){ // immediatly when first load the page will call searchPics for each term and assign the values for predefined terms 
     const fixedSearch = [
       'mountain','Duqm','containersShip'
     ];
     fixedSearch.map(term  => this.searchPics(term, "fixed"));
    
-    
 
   }
   
@@ -133,8 +124,7 @@ export default class  App extends React.Component  {
                       }
                     />
                     
-                    
-                  <Route component={NotFound} />
+                    <Route component={NotFound} />
 
                   </Switch>
                   }

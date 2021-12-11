@@ -1,25 +1,22 @@
-import { NotFound } from 'http-errors';
+
 import React from 'react';
+import NoResults from './NoResults';
 import Photo from './Photo';
+
 
 function PhotoContainer(props) {
     
    let photos =[] 
         
    
-        console.log("this is before map statement in photoContainer")
-        console.log(props)
         
-        
-            photos =props.data.map((photo) => <Photo url= {`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`}
-                         title={photo.title}
-                         pId={photo.id}
-                         key={photo.id}  />
-                        )
-        
-       
-        
-       return (
+        if(props.data.length > 0){
+                photos =props.data.map((photo) => <Photo url= {`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`}
+                                        title={photo.title}
+                                        pId={photo.id}
+                                        key={photo.id}  />
+                                        )
+        return (
            
         <div>
             <h1>{props.title.charAt(0).toUpperCase()+ props.title.slice(1)}</h1>
@@ -30,6 +27,16 @@ function PhotoContainer(props) {
 
         </div>
        );
+        }else return (
+            <div>
+                <NoResults />
+            </div>
+        );
+            
+        
+       
+        
+       
 }
 
 export default PhotoContainer;

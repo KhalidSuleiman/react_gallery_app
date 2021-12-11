@@ -1,12 +1,10 @@
 import React from 'react';
 
 function NotFound () {
-    console.log("*********** NotFound **************")
    
        return (
-            <li class="not-found">
-                <h3>No Results Found</h3>
-                <p>You search did not return any results. Please try again.</p>
+            <li className="not-found">
+                <h3>404 Page Not Found</h3>
             </li>
        );
    

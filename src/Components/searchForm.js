@@ -12,26 +12,25 @@ class SearchForm extends Component  {
         this.setState({
             searchValue : e.target.value
         })
-        console.log(e.target.value)
-        console.log("onSearchChange   ")
-        console.log(this.state.searchValue)
+        
     }
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(" input handler "+this.state.searchValue)
         this.props.searchPics(this.state.searchValue,"not-fixed")
         this.props.history.push(`/search/${this.state.searchValue}`)
         e.currentTarget.reset()
         
 
     }
-    componentDidUpdate(prevProps) { // invoked after updating occurs
+    componentDidUpdate(prevProps) 
+    { 
+        
         if(prevProps.location.pathname !== this.props.location.pathname ) 
-        { 
+         { 
             if(this.props.location.pathname.includes("/search"))
             { 
-                const query = this.props.location.pathname.replace("/search/", "");
-                this.props.searchPics(query,"not-fixed");
+                
+                this.props.searchPics(this.props.location.pathname.replace("/search/", ""),"not-fixed");
             }
         }
     }
