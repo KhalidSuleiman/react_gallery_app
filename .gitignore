@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/.idea
 
 # testing
 /coverage
@@ -25,6 +26,6 @@ yarn-error.log*
 
 
 #apiKey file 
-./src/config.js
+/src/config.js
 
 
