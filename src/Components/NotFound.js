@@ -1,5 +1,7 @@
 import React from 'react';
-
+/*
+    a function to display 404 error  message is URL was wrong  
+*/
 function NotFound () {
    
        return (

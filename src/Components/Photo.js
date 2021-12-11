@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * 
+ * 
+ * @returns constructed each image with jsx
+ */
 function Photo(props)
 {
     return (

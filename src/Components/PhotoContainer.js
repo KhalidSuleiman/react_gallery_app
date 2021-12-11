@@ -3,7 +3,11 @@ import React from 'react';
 import NoResults from './NoResults';
 import Photo from './Photo';
 
-
+/**
+ * 
+ * @param {data array and the title } props 
+ * @returns construct full 24 images 
+ */
 function PhotoContainer(props) {
     
    let photos =[] 

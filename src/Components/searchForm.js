@@ -1,7 +1,9 @@
 import  React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 
-
+/**
+ * search class display  search bar and handle key entered and search submission 
+ */
 class SearchForm extends Component  {
    state = {
        searchValue : '',

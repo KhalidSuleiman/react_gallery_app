@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 //import  Photo from './Photo';
 
+/*
+A function to display predefined searches term and buttons 
+*/
 export default class Navigation extends Component  {
    render () { 
        return (
